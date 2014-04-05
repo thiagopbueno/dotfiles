@@ -1,0 +1,1 @@
+export PS1='\r\n\[\e[38;5;125m\]\u \[\e[97m\]@ \[\e[36m\]\w \[\e[97m\]($( OUT=$( ls -A | wc -l ); echo $OUT ) entries, $(( $( ls -A | wc -l ) - $( ls | wc -l ) )) hidden)\r\n\[\e[33m\][\t] $ \[\e[97m\]'
