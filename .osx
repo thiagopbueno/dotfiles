@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# ~/.osx — http://mths.be/osx
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `.osx` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+
+###############################################################################
+echo "***** General UI/UX  *****"
+###############################################################################
+
+echo "Increase window resize speed for Cocoa applications..."
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+echo "Expand save panel by default..."
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+echo "Expand print panel by default..."
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+echo "Automatically quit printer app once the print jobs complete..."
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+echo "Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window..."
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+echo "Restart automatically if the computer freezes..."
+systemsetup -setrestartfreeze on
+
+echo "Check for software updates daily, not just once per week..."
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+echo
+
+###############################################################################
+echo "***** Trackpad, mouse, keyboard, Bluetooth accessories, and input *****"
+###############################################################################
+
+echo "Disable press-and-hold for keys in favor of key repeat..."
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+echo "Set a blazingly fast keyboard repeat rate..."
+defaults write NSGlobalDomain KeyRepeat -int 0
+
+echo "Automatically illuminate built-in MacBook keyboard in low light..."
+defaults write com.apple.BezelServices kDim -bool true
+echo "Turn off keyboard illumination when computer is not used for 5 minutes..."
+defaults write com.apple.BezelServices kDimTime -int 300
+
+echo
+
+
+###############################################################################
+echo "***** Screen *****"
+###############################################################################
+
+echo "Save screenshots to the desktop..."
+defaults write com.apple.screencapture location -string "$HOME/Desktop"
+
+echo "Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)..."
+defaults write com.apple.screencapture type -string "png"
+
+echo "Disable shadow in screenshots..."
+defaults write com.apple.screencapture disable-shadow -bool true
+
+echo
+
+
+###############################################################################
+echo "***** Finder *****"
+###############################################################################
+
+echo "Finder: disable window animations and Get Info animations..."
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+echo "Finder: don't show hidden files by default..."
+defaults write com.apple.Finder AppleShowAllFiles -bool false
+
+echo "Finder: show all filename extensions..."
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+echo "Finder: show status bar..."
+defaults write com.apple.finder ShowStatusBar -bool true
+
+echo "When performing a search, search the current folder by default..."
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+echo "Automatically open a new Finder window when a volume is mounted..."
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+echo "Show item info below icons on the desktop and in other icon views..."
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+
+echo "Use list view in all Finder windows by default..."
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+defaults write com.apple.Finder FXPreferredViewStyle -string "Nlsv"
+
+echo "Empty Trash securely by default..."
+defaults write com.apple.finder EmptyTrashSecurely -bool true
+
+echo
+
+
+###############################################################################
+echo "***** Transmission.app *****"
+###############################################################################
+
+echo "Don’t prompt for confirmation before downloading..."
+defaults write org.m0k.transmission DownloadAsk -bool false
+
+echo "Trash original torrent files..."
+defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
+
+echo "Hide the donate message..."
+defaults write org.m0k.transmission WarningDonate -bool false
+echo "Hide the legal disclaimer..."
+defaults write org.m0k.transmission WarningLegal -bool false
+
+echo
+
+
+###############################################################################
+# Kill affected applications #
+###############################################################################
+
+#for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
+#"Mail" "Safari" "SizeUp" "SystemUIServer" "Terminal" "Transmission" \
+#"Twitter" "iCal" "iTunes"; do
+#killall "$app" > /dev/null 2>&1
+#done
+
+echo "Done. Note that some of these changes require a logout/restart to take effect."
