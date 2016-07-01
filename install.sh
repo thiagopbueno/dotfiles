@@ -3,6 +3,7 @@ printf '>> Installing homebrew & cask ==========================================
 /usr/bin/ruby -e "$(curl =fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew tap caskroom/cask
+brew tap caskroom/fonts
 printf '\n\n'
 
 
@@ -16,6 +17,10 @@ brew linkapps emacs
 brew install gdb
 brew install gcc
 printf '\n\n'
+
+
+# Install fonts
+brew cask install font-inconsolata
 
 
 # Install libraries
