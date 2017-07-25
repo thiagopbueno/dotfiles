@@ -2,19 +2,20 @@
 alias please="sudo"
 
 # Navigating the filesystem
-alias h='cd ~'
-alias home='cd ~'
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias b="cd -"
 alias back="cd -"
 
+alias h='cd ~'
+alias home='cd ~'
 alias p="cd ~/Projects/"
-
-alias d="cd ~/Google\ Drive/"
+alias projects="cd ~/Projects/"
+alias gd="cd ~/Google\ Drive/"
 alias drive="cd ~/Google\ Drive/"
 alias b="cd ~/Dropbox"
-alias box="cd ~/Dropbox"
+alias dropbox="cd ~/Dropbox"
 
 
 # Listing files
