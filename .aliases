@@ -56,8 +56,7 @@ function checksumfunc(){
 alias checksum='checksumfunc'
 
 # Git-ting things done
-alias g="git"
-alias gs="git status"
-alias glog="git log --oneline --decorate --graph"
-
+alias gits="git status"
+alias gitb="git branch"
+alias gitlog="git log --oneline --decorate --graph"
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
