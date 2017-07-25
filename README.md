@@ -1,9 +1,10 @@
 dotfiles
 ========
 
-Configuration files for bash and bootstrap scripts for OS X El Capitan and others.
+Configuration files for bash and bootstrap scripts for OS X Sierra.
 
-## Installation
+
+## Basic install
 
 
 ```
@@ -21,4 +22,12 @@ Run bootstrap script:
 ```
 $ chmod +x bootstrap.sh
 $ ./bootstrap.sh
+```
+
+## Additional installations
+
+```
+$ chmod +x install-python.sh install-ruby.sh
+$ ./install-python.sh
+$ ./install-ruby.sh
 ```
