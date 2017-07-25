@@ -60,3 +60,6 @@ alias gits="git status"
 alias gitb="git branch"
 alias gitlog="git log --oneline --decorate --graph"
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
+
+# code
+alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
