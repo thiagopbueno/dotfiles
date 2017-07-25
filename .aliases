@@ -49,6 +49,11 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
+# Calculate check sums
+function checksumfunc(){
+    openssl sha1 "$1"; openssl dgst -sha256 "$1"; openssl md5 "$1";
+}
+alias checksum='checksumfunc'
 
 # Git-ting things done
 alias g="git"
