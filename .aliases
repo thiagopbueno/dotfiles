@@ -2,7 +2,6 @@
 alias please="sudo"
 
 # Navigating the filesystem
-
 alias ..='cd ..'
 alias ...='cd ../..'
 alias b="cd -"
@@ -26,8 +25,8 @@ if ls --color > /dev/null 2>&1; then # GNU `ls`
 else # OS X `ls`
 	colorflag="-G"
 fi
-alias l="ls -hl ${colorflag}"    # list in human-readable long format
-alias la="ls -ahl ${colorflag}"  # list all
+alias l="ls -hlF ${colorflag}"    # list in human-readable long format
+alias la="ls -ahlF ${colorflag}"  # list all
 alias lsd='ls -l | grep "^d"'    # list only directories
 alias lh="ls -ldh .*"            # list only hidden files
 
@@ -35,6 +34,10 @@ alias lh="ls -ldh .*"            # list only hidden files
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en1"
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Cleaning up
 alias c="clear" # clear the terminal screen
@@ -44,10 +47,6 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
 # empty the `Trash' on all mounted volumes and the main HDD
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
-
-# hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
 # Calculate check sums
 function checksumfunc(){
@@ -62,4 +61,4 @@ alias gitlog="git log --oneline --decorate --graph"
 alias undopush="git push -f origin HEAD^:master" # Undo a `git push`
 
 # code
-alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+alias subl="/usr/bin/subl"

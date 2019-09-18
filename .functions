@@ -9,11 +9,6 @@ function cl () {
     cd "$1" && la;
 }
 
-# z change and list its files
-function zl () {
-    z "$1" && la;
-}
-
 # Extract archives - use: extract <file>
 # Based on http://dotfiles.org/~pseup/.bashrc
 function extract() {
