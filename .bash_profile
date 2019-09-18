@@ -29,11 +29,18 @@ shopt -s checkwinsize
 # make emacs the default editor
 export EDITOR="emacs"
 
-# select global ruby version from rbenv global
-export PATH="$HOME/.rbenv/shims:$PATH"
+export PATH="$PATH:$HOME/bin"
 
-# select gcc over clang
-export PATH="/usr/local/Cellar/gcc/6.1.0/bin:$PATH"
+# Python3.6
+#export PYTHONPATH=/usr/lib/tensorflow/lib/python3.6:$PYTHONPATH/
 
-# add macport
-export PATH="/opt/local/bin:$PATH"
+# Bazel
+source $HOME/.bazel/bin/bazel-complete.bash
+
+# CUDA
+export PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+
+# MuJoCo
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tbueno/.mujoco/mujoco200/bin
