@@ -1,7 +1,10 @@
-PS1='\r\n\[\e[38;5;125m\]\u '       # username
-PS1+='\[\e[97m\]in \[\e[36m\]\w '   # working directory
-PS1+='\[\e[97m\]($( OUT=$( ls -A | wc -l ); echo $OUT ) files, ' # number of files
-PS1+='$(( $( ls -A | wc -l ) - $( ls | wc -l ) )) hidden) '      # number of hidden files
-PS1+='\r\n\[\e[33m\][\t] ' # time
-PS1+='\[\e[97m\]$ '        # prompt sign
-export PS1;
+PS1="\r\n"
+PS1+="\[\e[1;42m\] \u \[\e[m\]" # username
+PS1+="\[\e[32;44m\]▶\[\e[m\]"   # separator
+PS1+="\[\e[1;44m\] \w \[\e[m\]" # working directory
+PS1+="\[\e[34;100m\]▶\[\e[m\]"   # separator
+PS1+="\[\e[1;33;100m\] "
+PS1+="($( OUT=$( ls -A | wc -l ); echo $OUT ) files, "      # number of files
+PS1+="$(( $( ls -A | wc -l ) - $( ls | wc -l ) )) hidden) " # number of hidden files
+PS1+="\[\e[m\]"
+PS1+="\n >>> " # prompt sign
