@@ -35,21 +35,24 @@ function git_status {
     git_ls_files+=$(git_num_untracked_files)
 
     if [ "$git_ls_files" == "" ]; then
-        echo "[$(git_branch)]"
+        echo "[$(git_branch)] "
     else
-        echo "[$(git_branch)|$git_ls_files]"
+        echo "[$(git_branch)|$git_ls_files] "
     fi
 }
 
 function prompt_command {
     prompt="\r\n"
-    prompt+="\[\e[1;42m\] \u \[\e[m\]"  # username
+    prompt+="\[\e[0;42m\] \u \[\e[m\]"  # username
     prompt+="\[\e[32;44m\]▶\[\e[m\]"    # separator
-    prompt+="\[\e[1;44m\] \w \[\e[m\]"  # working directory
+    prompt+="\[\e[0;44m\] \w \[\e[m\]"  # working directory
     prompt+="\[\e[34;100m\]▶\[\e[m\]"   # separator
-    prompt+="\[\e[1;33;100m\] "
+
+    prompt+="\[\e[0;100m\] "
     prompt+="($(total_num_files) files, "  # number of files
     prompt+="$(num_hidden_files) hidden) " # number of hidden files
+    prompt+="\[\e[m\]"
+    prompt+="\[\e[1;33;100m\] "
     [ -d ".git" ] && prompt+=$(git_status) # Git status
     prompt+="\[\e[m\]"
     prompt+="\n >>> " # prompt sign
@@ -57,4 +60,8 @@ function prompt_command {
     export PS1=$prompt
 }
 
-PROMPT_COMMAND=prompt_command
+if [ "$PROMPT_COMMAND" == "" ]; then
+    PROMPT_COMMAND="prompt_command"
+else
+    PROMPT_COMMAND="$PROMPT_COMMAND; prompt_command"
+fi
