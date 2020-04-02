@@ -41,6 +41,10 @@ function git_status {
     fi
 }
 
+function virtual_env {
+    [ -n "$VIRTUAL_ENV" ] && echo "($(basename $VIRTUAL_ENV)) "
+}
+
 function prompt_command {
     prompt="\r\n"
     prompt+="\[\e[0;42m\] \u \[\e[m\]"  # username
@@ -55,7 +59,7 @@ function prompt_command {
     prompt+="\[\e[1;33;100m\] "
     [ -d ".git" ] && prompt+=$(git_status) # Git status
     prompt+="\[\e[m\]"
-    prompt+="\n >>> " # prompt sign
+    prompt+="\n $(virtual_env)>>> " # prompt sign
 
     export PS1=$prompt
 }
