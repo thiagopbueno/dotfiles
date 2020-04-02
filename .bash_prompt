@@ -1,10 +1,60 @@
-PS1="\r\n"
-PS1+="\[\e[1;42m\] \u \[\e[m\]" # username
-PS1+="\[\e[32;44m\]▶\[\e[m\]"   # separator
-PS1+="\[\e[1;44m\] \w \[\e[m\]" # working directory
-PS1+="\[\e[34;100m\]▶\[\e[m\]"   # separator
-PS1+="\[\e[1;33;100m\] "
-PS1+="($( OUT=$( ls -A | wc -l ); echo $OUT ) files, "      # number of files
-PS1+="$(( $( ls -A | wc -l ) - $( ls | wc -l ) )) hidden) " # number of hidden files
-PS1+="\[\e[m\]"
-PS1+="\n >>> " # prompt sign
+function total_num_files {
+    echo $( ls -A | wc -l )
+}
+
+function num_regular_files {
+    echo $( ls | wc -l )
+}
+
+function num_hidden_files {
+    echo $(( $(total_num_files) - $(num_regular_files) ))
+}
+
+function git_branch {
+    echo $( git branch | grep '*' | cut -d' ' -f2 )
+}
+
+function git_num_files_changed_but_not_staged {
+    num=$( git status --porcelain=2 | grep '\W.M\W' | wc -l )
+    [ "$num" -gt 0 ] && echo "+$num"
+}
+
+function git_num_files_staged {
+    num=$( git status --porcelain=2 | grep '\WM.\W' | wc -l )
+    [ "$num" -gt 0 ] && echo "•$num"
+}
+
+function git_num_untracked_files {
+    num=$( git status --porcelain=2 | grep '^\?' | wc -l )
+    [ "$num" -gt 0 ] && echo "...$num"
+}
+
+function git_status {
+    git_ls_files=$(git_num_files_changed_but_not_staged)
+    git_ls_files+=$(git_num_files_staged)
+    git_ls_files+=$(git_num_untracked_files)
+
+    if [ "$git_ls_files" == "" ]; then
+        echo "[$(git_branch)]"
+    else
+        echo "[$(git_branch)|$git_ls_files]"
+    fi
+}
+
+function prompt_command {
+    prompt="\r\n"
+    prompt+="\[\e[1;42m\] \u \[\e[m\]"  # username
+    prompt+="\[\e[32;44m\]▶\[\e[m\]"    # separator
+    prompt+="\[\e[1;44m\] \w \[\e[m\]"  # working directory
+    prompt+="\[\e[34;100m\]▶\[\e[m\]"   # separator
+    prompt+="\[\e[1;33;100m\] "
+    prompt+="($(total_num_files) files, "  # number of files
+    prompt+="$(num_hidden_files) hidden) " # number of hidden files
+    [ -d ".git" ] && prompt+=$(git_status) # Git status
+    prompt+="\[\e[m\]"
+    prompt+="\n >>> " # prompt sign
+
+    export PS1=$prompt
+}
+
+PROMPT_COMMAND=prompt_command
